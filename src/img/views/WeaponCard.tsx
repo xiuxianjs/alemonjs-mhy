@@ -160,7 +160,7 @@ export default function WeaponCard({ data }: WeaponCardProps) {
   const filterLabel = filterRarity > 0 ? ` · ${filterRarity}星` : '';
 
   return (
-    <HTML>
+    <HTML style={{ width: '500px' }}>
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

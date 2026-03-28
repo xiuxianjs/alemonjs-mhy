@@ -44,7 +44,9 @@ const MHY_HELP: HelpCategory[] = [
       { icon: '🗡️', cmd: '#武器 / #五星武器', desc: '武器列表与装备情况' },
       { icon: '🌿', cmd: '#体力 / #树脂', desc: '实时树脂与每日委托' },
       { icon: '💎', cmd: '#原石 / #札记', desc: '原石收入月度统计' },
-      { icon: '🎭', cmd: '#剧诗', desc: '幻想真境剧诗阵容' }
+      { icon: '🎭', cmd: '#剧诗', desc: '幻想真境剧诗阵容' },
+      { icon: '🃏', cmd: '#七圣召唤查询', desc: '七圣召唤牌组/卡牌查询' },
+      { icon: '🎂', cmd: '#留影叙佳期 / #生日卡', desc: '领取生日角色卡片' }
     ]
   },
   {
@@ -69,10 +71,12 @@ const MHY_HELP: HelpCategory[] = [
     items: [
       { icon: '📰', cmd: '#公告 / #资讯 / #活动', desc: '米游社官方资讯' },
       { icon: '🎁', cmd: '#兑换码', desc: '查询直播兑换码' },
-      { icon: '�', cmd: '#原神签到 / #签到', desc: '游戏每日签到' },
+      { icon: '🎟️', cmd: '#兑换码使用 <CDK>', desc: '使用CDK兑换码' },
+      { icon: '🎉', cmd: '#原神签到 / #签到', desc: '游戏每日签到' },
       { icon: '🌟', cmd: '#星铁签到', desc: '星穹铁道每日签到' },
       { icon: '🪙', cmd: '#米游社签到', desc: '米游币社区签到' },
-      { icon: '�📖', cmd: '#米游社帮助', desc: '查看本帮助图' }
+      { icon: '💰', cmd: '#充值记录', desc: '充值/消费记录统计' },
+      { icon: '📖', cmd: '#米游社帮助', desc: '查看本帮助图' }
     ]
   }
 ];
@@ -87,7 +91,7 @@ interface MihoyoHelpProps {
 
 export default function MihoyoHelp({ data: _data }: MihoyoHelpProps) {
   return (
-    <HTML>
+    <HTML style={{ width: '800px' }}>
       <div
         style={{
           padding: '15px',

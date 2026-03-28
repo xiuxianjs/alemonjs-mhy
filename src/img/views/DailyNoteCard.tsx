@@ -329,7 +329,7 @@ export default function DailyNoteCard({ data }: DailyNoteCardProps) {
   const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
   return (
-    <HTML>
+    <HTML style={{ width: '480px' }}>
       <div style={styles.card}>
         {/* 标题 */}
         <div style={styles.header}>

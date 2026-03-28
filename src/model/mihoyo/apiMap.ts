@@ -23,6 +23,9 @@ const cnEndpoints: Record<MihoyoGame, Record<string, MihoyoApiEndpoint>> = {
     compute: { host: 'https://api-takumi.mihoyo.com', path: '/event/e20200928calculate/v3/batch_compute', method: 'POST' },
     avatarSkill: { host: 'https://api-takumi.mihoyo.com', path: '/event/e20200928calculate/v1/avatarSkill/list', method: 'GET' },
     ys_ledger: { host: 'https://hk4e-api.mihoyo.com', path: '/event/ys_ledger/monthInfo', method: 'GET' },
+    deckList: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/gcg/deckList', method: 'GET' },
+    gcgBasicInfo: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/gcg/basicInfo', method: 'GET' },
+    gcgCardList: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/gcg/cardList', method: 'GET' },
     useCdk: { host: 'https://sg-hk4e-api.hoyolab.com', path: '/common/apicdkey/api/webExchangeCdkeyHyl', method: 'GET' }
   },
   sr: {
@@ -65,6 +68,9 @@ const osEndpoints: Record<MihoyoGame, Record<string, MihoyoApiEndpoint>> = {
     compute: { host: 'https://sg-public-api.hoyolab.com', path: '/event/calculateos/compute', method: 'POST' },
     avatarSkill: { host: 'https://sg-public-api.hoyolab.com', path: '/event/calculateos/avatar/skill_list', method: 'GET' },
     ys_ledger: { host: 'https://sg-hk4e-api.hoyolab.com', path: '/event/ysledgeros/month_info', method: 'GET' },
+    deckList: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/gcg/deckList', method: 'GET' },
+    gcgBasicInfo: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/gcg/basicInfo', method: 'GET' },
+    gcgCardList: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/gcg/cardList', method: 'GET' },
     useCdk: { host: 'https://sg-hk4e-api.hoyolab.com', path: '/common/apicdkey/api/webExchangeCdkeyHyl', method: 'GET' }
   },
   sr: {

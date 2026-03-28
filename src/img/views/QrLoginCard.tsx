@@ -28,7 +28,7 @@ export default function QrLoginCard({ data }: QrLoginCardProps) {
   const cfg = STATUS_CONFIG[status];
 
   return (
-    <HTML>
+    <HTML style={{ width: '380px' }}>
       <div
         style={{
           padding: '20px',

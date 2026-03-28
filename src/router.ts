@@ -112,6 +112,30 @@ export default defineRouter([
       {
         regular: mihoyoRouteRules.qrLogin,
         handler: lazy(() => import('@src/response/mihoyo/qrLogin'))
+      },
+      // ─── 兑换码使用 ──────────────────────────────
+      {
+        regular: mihoyoRouteRules.useCode,
+        handler: lazy(() => import('@src/response/mihoyo/useCode'))
+      },
+      // ─── 七圣召唤 ────────────────────────────────
+      {
+        regular: mihoyoRouteRules.sevenSaints,
+        handler: lazy(() => import('@src/response/mihoyo/sevenSaints'))
+      },
+      // ─── 留影叙佳期 ──────────────────────────────
+      {
+        regular: mihoyoRouteRules.birthday,
+        handler: lazy(() => import('@src/response/mihoyo/birthday'))
+      },
+      // ─── 充值记录 ────────────────────────────────
+      {
+        regular: mihoyoRouteRules.payLog,
+        handler: lazy(() => import('@src/response/mihoyo/payLog'))
+      },
+      {
+        regular: mihoyoRouteRules.payLogAuth,
+        handler: lazy(() => import('@src/response/mihoyo/payLog'))
       }
     ]
   }

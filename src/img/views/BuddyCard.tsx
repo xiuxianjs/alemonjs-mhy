@@ -108,7 +108,7 @@ export default function BuddyCard({ data }: BuddyCardProps) {
   const sorted = [...buddies].sort((a, b) => b.level - a.level || b.star - a.star);
 
   return (
-    <HTML>
+    <HTML style={{ width: '450px' }}>
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

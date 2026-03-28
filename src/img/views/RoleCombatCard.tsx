@@ -183,7 +183,7 @@ export default function RoleCombatCard({ data }: RoleCombatCardProps) {
   }
 
   return (
-    <HTML>
+    <HTML style={{ width: '700px' }}>
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

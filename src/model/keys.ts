@@ -9,6 +9,7 @@ export const mihoyoKeys = {
   stokenByUser: (userId: string | number) => `${mihoyoKeyPrefix}:stoken:user:${userId}`,
   uidByUserAndGame: (userId: string | number, game: string) => `${mihoyoKeyPrefix}:uid:user:${userId}:${game}`,
   authKeyByUid: (uid: string | number) => `${mihoyoKeyPrefix}:authkey:uid:${uid}`,
+  payLogByUser: (userId: string | number) => `${mihoyoKeyPrefix}:paylog:user:${userId}`,
   queryCache: (game: string, uid: string | number, api: string) => `${mihoyoKeyPrefix}:cache:${game}:${uid}:${api}`,
   deviceFp: (uid: string | number) => `${mihoyoKeyPrefix}:device_fp:${uid}`,
   qrLoginLock: (userId: string | number) => `${mihoyoKeyPrefix}:qrlogin:lock:${userId}`,

@@ -1,26 +1,32 @@
 /**
  * 兑换码查询
- * 命令: #兑换码 / #原神兑换码 / #星铁兑换码
+ * 命令: #兑换码 / #原神兑换码 / #星铁兑换码 / #绝区零兑换码
  */
 import type { MihoyoGame } from '@src/model/mihoyo/types';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
 
 const resolveGame = (text: string): MihoyoGame => {
-  if (text.includes('星铁')) {
+  if (/星铁|崩铁/.test(text)) {
     return 'sr';
   }
-
-  if (text.includes('绝区零')) {
+  if (/绝区零/.test(text)) {
     return 'zzz';
   }
 
   return 'gs';
 };
 
-const GAME_GID: Record<MihoyoGame, number> = {
-  gs: 2,
-  sr: 6,
-  zzz: 8
+// 米游社官方账户 UID (用于搜索直播帖)
+const MIYOLIVE_UIDS: Record<MihoyoGame, string> = {
+  gs: '75276539',
+  sr: '80823548',
+  zzz: '152039148'
+};
+
+const GAME_GIDS: Record<MihoyoGame, string> = {
+  gs: '2',
+  sr: '6',
+  zzz: '8'
 };
 
 const GAME_NAMES: Record<MihoyoGame, string> = {
@@ -29,84 +35,125 @@ const GAME_NAMES: Record<MihoyoGame, string> = {
   zzz: '绝区零'
 };
 
-// 从米游社直播帖子中提取兑换码
-const MIYOLIVE_ACT_IDS: Record<MihoyoGame, number> = {
-  gs: 75276539,
-  sr: 80823548,
-  zzz: 152039148
-};
-
-const BBS_API = 'https://bbs-api.miyoushe.com';
-
-const fetchNewsListForCodes = async (game: MihoyoGame): Promise<string[]> => {
-  const headers = {
-    Referer: 'https://www.miyoushe.com',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-  };
-
+/** 从官方帖子中提取直播 act_id */
+const getActIdFromPosts = async (game: MihoyoGame): Promise<string | null> => {
   try {
-    // 搜索直播帖子获取 act_id
-    const listUrl = `${BBS_API}/painter/wapi/getNewsList?gids=${GAME_GID[game]}&page_size=20&type=1`;
-    const listRes = await fetch(listUrl, { headers });
-
-    if (!listRes.ok) {
-      return [];
-    }
-
-    const listJson = (await listRes.json()) as {
-      data?: { list?: Array<{ post: { post_id: string; subject: string; content: string } }> };
-    };
-
-    const posts = listJson.data?.list ?? [];
-
-    // 找包含"兑换码"或"前瞻"的帖子
-    const livePost = posts.find(p => p.post.subject.includes('前瞻') || p.post.subject.includes('直播') || p.post.content.includes('兑换码'));
-
-    if (!livePost) {
-      return [];
-    }
-
-    // 尝试从帖子内容提取兑换码 (大写字母+数字 8-16位)
-    const codePattern = /\b[A-Z0-9]{8,16}\b/g;
-    const content = livePost.post.content;
-    const matches = content.match(codePattern) ?? [];
-
-    // 过滤常见非兑换码字符串
-    return matches.filter(code => /[A-Z]/.test(code) && /[0-9]/.test(code));
-  } catch {
-    return [];
-  }
-};
-
-// 尝试通过 miyolive API 获取兑换码
-const fetchMiyoliveCodes = async (game: MihoyoGame): Promise<string[]> => {
-  try {
-    const actId = MIYOLIVE_ACT_IDS[game];
-    const url = 'https://api-takumi.mihoyo.com/event/miyolive/index';
-    const headers = {
-      'x-rpc-act_id': String(actId),
-      'User-Agent': 'Mozilla/5.0',
-      Referer: 'https://webstatic.mihoyo.com/'
-    };
-
-    const res = await fetch(url, { headers });
-
-    if (!res.ok) {
-      return [];
-    }
-
+    const uid = MIYOLIVE_UIDS[game];
+    const url = `https://bbs-api.mihoyo.com/painter/api/user_instant/list?offset=0&size=20&uid=${uid}`;
+    const res = await fetch(url);
     const json = (await res.json()) as {
       retcode: number;
-      data?: { live?: { code_list?: Array<{ code: string; title: string }> } };
+      data?: { list?: Array<{ post?: { post?: { structured_content?: string } } }> };
     };
 
     if (json.retcode !== 0) {
-      return [];
+      return null;
     }
 
-    return (json.data?.live?.code_list ?? []).map(c => c.code).filter(Boolean);
+    for (const p of json.data?.list ?? []) {
+      const sc = p?.post?.post?.structured_content;
+
+      if (!sc) {
+        continue;
+      }
+
+      const match = sc.match(/act_id=([a-zA-Z0-9]+)/);
+
+      if (match) {
+        return match[1];
+      }
+    }
+
+    return null;
   } catch {
-    return [];
+    return null;
+  }
+};
+
+/** 从导航栏获取 act_id (备选) */
+const getActIdFromNav = async (game: MihoyoGame): Promise<string | null> => {
+  try {
+    const gid = GAME_GIDS[game];
+    const url = `https://bbs-api.miyoushe.com/apihub/api/home/new?gids=${gid}&parts=1%2C3%2C4`;
+    const res = await fetch(url);
+    const json = (await res.json()) as {
+      retcode: number;
+      data?: { navigator?: Array<{ name: string; app_path: string }> };
+    };
+
+    if (json.retcode !== 0) {
+      return null;
+    }
+
+    const nav = json.data?.navigator?.find(item => /前瞻|特别节目/.test(item.name) && item.app_path.includes('act_id='));
+
+    if (nav) {
+      const match = nav.app_path.match(/act_id=([a-zA-Z0-9]+)/);
+
+      if (match) {
+        return match[1];
+      }
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+};
+
+/** 通过 miyolive API 获取兑换码 */
+const fetchCodesFromMiyolive = async (actId: string): Promise<{ codes: string[]; title: string; deadline: string }> => {
+  try {
+    // 1. 获取 index 信息
+    const indexRes = await fetch('https://api-takumi.mihoyo.com/event/miyolive/index', {
+      headers: { 'x-rpc-act_id': actId }
+    });
+    const indexJson = (await indexRes.json()) as {
+      retcode: number;
+      data?: { live?: { title: string; code_ver: number; remain: number } };
+    };
+
+    if (indexJson.retcode !== 0 || !indexJson.data?.live) {
+      return { codes: [], title: '', deadline: '' };
+    }
+
+    const { title, code_ver: codeVer, remain } = indexJson.data.live;
+
+    if (remain > 0) {
+      return { codes: [], title, deadline: '' };
+    }
+
+    // 2. 获取兑换码列表
+    const now = Math.floor(Date.now() / 1000);
+    const codeRes = await fetch(`https://api-takumi-static.mihoyo.com/event/miyolive/refreshCode?version=${codeVer}&time=${now}`, {
+      headers: { 'x-rpc-act_id': actId }
+    });
+    const codeJson = (await codeRes.json()) as {
+      retcode: number;
+      data?: { code_list?: Array<{ code: string; to_get_time?: number }> };
+    };
+
+    const codeList = codeJson.data?.code_list ?? [];
+    const codes = codeList.map(c => c.code).filter(Boolean);
+
+    // 计算过期时间
+    let deadline = '';
+
+    if (codeList.length > 0 && codeList[0].to_get_time) {
+      const date = new Date(codeList[0].to_get_time * 1000);
+
+      date.setDate(date.getDate() + 3);
+
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+
+      deadline = `${y}-${m}-${d} 23:59:59`;
+    }
+
+    return { codes, title, deadline };
+  } catch {
+    return { codes: [], title: '', deadline: '' };
   }
 };
 
@@ -124,27 +171,34 @@ export default async (e: EventsEnum) => {
 
   const md = Format.createMarkdown();
 
-  // 先尝试 miyolive API
-  let codes = await fetchMiyoliveCodes(game);
+  // 1. 从帖子获取 act_id
+  let actId = await getActIdFromPosts(game);
 
-  // 如果没有再尝试从帖子提取
-  if (codes.length === 0) {
-    codes = await fetchNewsListForCodes(game);
+  // 2. 备选: 从导航栏获取
+  actId ??= await getActIdFromNav(game);
+
+  if (!actId) {
+    md.addText(`【${GAME_NAMES[game]}·兑换码】\n\n暂未获取到直播活动信息`);
+
+    const format = Format.create();
+
+    format.addMarkdown(md);
+    void message.send({ format });
+
+    return;
   }
 
+  // 3. 通过 miyolive API 获取兑换码
+  const { codes, title, deadline } = await fetchCodesFromMiyolive(actId);
+
   if (codes.length === 0) {
-    md.addText(`【${GAME_NAMES[game]}·兑换码】\n\n暂无可用的兑换码\n可能当前没有活动直播或兑换码已过期`);
+    md.addText(`【${title || GAME_NAMES[game]}·兑换码】\n\n暂无可用兑换码，可能尚未发布或已过期`);
   } else {
-    const lines: string[] = [
-      `【${GAME_NAMES[game]}·兑换码】`,
-      '',
-      ...codes.map((code, i) => `${i + 1}. ${code}`),
-      '',
-      '兑换地址:',
-      game === 'gs' ? 'https://genshin.hoyoverse.com/gift' : '',
-      game === 'sr' ? 'https://hsr.hoyoverse.com/gift' : '',
-      game === 'zzz' ? 'https://zenless.hoyoverse.com/redemption' : ''
-    ].filter(Boolean);
+    const lines: string[] = [`【${title || GAME_NAMES[game]}·兑换码】`, '', ...codes.map((code, i) => `${i + 1}. ${code}`)];
+
+    if (deadline) {
+      lines.push('', `过期时间: ${deadline}`);
+    }
 
     md.addText(lines.join('\n'));
   }
