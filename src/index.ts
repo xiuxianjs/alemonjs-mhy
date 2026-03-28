@@ -3,16 +3,16 @@ import router from './router';
 // ─── 导出供其他插件使用的 API ────────────────────────
 
 // 类型
-export type { MihoyoContext } from '@src/middleware/mw.js';
 export type { BindCookieResult, StoredCookieData } from '@src/model/mihoyo/account';
 export type { GameRoleInfo, MysApiResponse } from '@src/model/mihoyo/mysApi';
 export type { QueryResult } from '@src/model/mihoyo/query';
 export type { BbsSignResult, SignResult, SignRoleResult } from '@src/model/mihoyo/sign';
 export type { BindStokenResult, QrCodeStatus, QrSession, StokenData } from '@src/model/mihoyo/stoken';
 export type { MihoyoGame, MihoyoRegionProfile, MihoyoRegionType } from '@src/model/mihoyo/types';
+export type { MihoyoContext } from '@src/mw.js';
 
 // 游戏类型检测
-export { resolveGame } from '@src/middleware/mw.js';
+export { resolveGame } from '@src/mw.js';
 
 // 区服识别
 export { resolveMihoyoRegion } from '@src/model/mihoyo/region';
