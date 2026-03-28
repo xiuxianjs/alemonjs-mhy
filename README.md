@@ -10,6 +10,8 @@
 
 ## 安装方式1: Git
 
+### alemongo/alemondesk
+
 - 地址
 
 ```sh
@@ -26,6 +28,23 @@ https://ghfast.top/https://github.com/lemonade-lab/alemonjs-mhy.git
 
 ```sh
 release
+```
+
+### 本地
+
+```sh
+git clone -b release --depth=1 https://github.com/lemonade-lab/alemonjs-mhy.git ./packages/alemonjs-mhy
+```
+
+```sh
+yarn install #开始模块化
+```
+
+- alemon.config.yaml
+
+```yaml
+apps:
+  alemonjs-mhy: true # 启动扩展
 ```
 
 ## 安装方式2: npm
