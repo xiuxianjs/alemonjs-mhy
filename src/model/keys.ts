@@ -1,9 +1,7 @@
 /**
  * 存储在 Redis 里的 Key 相关
  */
-export const baseKey = 'data:alemonjs-mhy';
-
-const mihoyoKeyPrefix = `${baseKey}:mihoyo`;
+const mihoyoKeyPrefix = 'data:alemonjs-mhy';
 
 export const mihoyoKeys = {
   base: (data?: string) => `${mihoyoKeyPrefix}${data ?? ''}`,
