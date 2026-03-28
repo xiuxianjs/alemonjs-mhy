@@ -1,11 +1,4 @@
-/**
- * 全局中间件
- * 所有后续插件可通过 e.mihoyo 直接访问游戏类型
- * 注意: e.mihoyo 只挂可序列化的纯数据（无函数），
- * 因为 alemonjs 跨进程传递事件时使用 v8.serialize。
- */
 import type { MihoyoGame } from '@src/model/mihoyo/types';
-import { EventsEnum, Next } from 'alemonjs';
 
 // ─── 游戏类型检测 ────────────────────────────────────
 
@@ -36,27 +29,3 @@ export interface MihoyoContext {
   /** 是否绝区零 */
   isZzz: boolean;
 }
-
-// ─── 中间件实现 ──────────────────────────────────────
-
-export default (event: EventsEnum, next: Next) => {
-  const text = event.MessageText ?? '';
-  const game = resolveGame(text);
-
-  const mihoyo: MihoyoContext = {
-    game,
-    isGs: game === 'gs',
-    isSr: game === 'sr',
-    isZzz: game === 'zzz'
-  };
-
-  // 挂载到事件对象（只读，纯数据可序列化）
-  Object.defineProperty(event, 'mihoyo', {
-    value: mihoyo,
-    writable: false,
-    configurable: false,
-    enumerable: true
-  });
-
-  next();
-};

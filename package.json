@@ -1,7 +1,7 @@
 {
   "name": "alemonjs-mhy",
   "version": "0.0.1",
-  "description": "yunzai",
+  "description": "mhy-mod",
   "author": "ningmengchongshui",
   "type": "module",
   "main": "./lib/index.js",

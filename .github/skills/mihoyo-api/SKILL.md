@@ -28,24 +28,6 @@ type MihoyoRegionType = 'cn' | 'global';
 interface MihoyoRegionProfile { game: MihoyoGame; server: string; type: MihoyoRegionType; }
 ```
 
-## 添加新 API 端点
-
-1. **在 `apiMap.ts` 添加端点**:
-   - `cnEndpoints[game][apiName]` 和 `osEndpoints[game][apiName]`
-   - 每个端点包含 `{ host, path, method }`
-
-2. **在 `query.ts` 中使用**:
-   ```typescript
-   const result = await queryMihoyoApi({
-     userId,
-     game: e.mihoyo.game,
-     api: 'newApiName',
-     query: { extra_param: 'value' }  // 可选
-   });
-   ```
-
-3. **处理 retcode**: 在 `query.ts` 的 `RETCODE_MESSAGES` 添加新错误码映射
-
 ## DS 签名机制
 
 ```

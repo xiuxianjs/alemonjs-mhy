@@ -1,10 +1,9 @@
 import router from './router';
-import routerMw from './router-mw';
 
 // ─── 导出供其他插件使用的 API ────────────────────────
 
 // 类型
-export type { MihoyoContext } from '@src/middleware/mw';
+export type { MihoyoContext } from '@src/middleware/mw.js';
 export type { BindCookieResult, StoredCookieData } from '@src/model/mihoyo/account';
 export type { GameRoleInfo, MysApiResponse } from '@src/model/mihoyo/mysApi';
 export type { QueryResult } from '@src/model/mihoyo/query';
@@ -13,7 +12,7 @@ export type { BindStokenResult, QrCodeStatus, QrSession, StokenData } from '@src
 export type { MihoyoGame, MihoyoRegionProfile, MihoyoRegionType } from '@src/model/mihoyo/types';
 
 // 游戏类型检测
-export { resolveGame } from '@src/middleware/mw';
+export { resolveGame } from '@src/middleware/mw.js';
 
 // 区服识别
 export { resolveMihoyoRegion } from '@src/model/mihoyo/region';
@@ -38,8 +37,7 @@ export { fetchGameRoles, fetchUserFullInfo, mysApiFetch } from '@src/model/mihoy
 export default defineChildren({
   register() {
     return {
-      responseRouter: router,
-      middlewareRouter: routerMw
+      responseRouter: router
     };
   },
   onCreated() {

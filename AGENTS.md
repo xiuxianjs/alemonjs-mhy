@@ -41,7 +41,6 @@ app.ts → src/index.ts → src/router.ts → src/response/mihoyo/*.ts
 `src/response/mw.ts` 全局中间件在所有路由前执行：
 
 - 从消息文本中检测游戏类型 (`resolveGame()` → `'gs' | 'sr' | 'zzz'`)
-- 挂载 `e.mihoyo` 上下文 (`{ game, isGs, isSr, isZzz }`)
 
 ### Response Handler 标准模式
 
