@@ -10,7 +10,7 @@
 
 ## 指令一览
 
-<img src="./image.png">
+[README_COMMAND](./README_COMMAND.md)
 
 ## 安装方式1: Git
 
