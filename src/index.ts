@@ -43,6 +43,6 @@ export default defineChildren({
     };
   },
   onCreated() {
-    logger.info('mihoyo服务');
+    logger.info('Mihoyo API Server Done');
   }
 });
