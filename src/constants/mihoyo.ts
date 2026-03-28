@@ -11,8 +11,7 @@ export const mihoyoConstants = {
 } as const;
 
 export const mihoyoRouteRules = {
-  help: /^(!|！|\/|#|＃)(米游社|mihoyo)(帮助|迁移|模块)$/,
-  status: /^(!|！|\/|#|＃)(米游社|mihoyo)(状态|status)$/,
+  help: /^(!|！|\/|#|＃)(米游社|米哈游|mhy|mihoyo)(帮助|help|模块)$/,
   bindCk: /^(!|！|\/|#|＃)绑定c(oo)?k(ie)?$/i,
   bindUid: /^(!|！|\/|#|＃)(原神|星铁|绝区零)?绑定(uid)?(\s|\+)*((1[0-9]|[1-9])[0-9]{8}|[1-9][0-9]{7})$/i,
   showUid: /^(!|！|\/|#|＃)(原神|星铁|绝区零)?(我的)?(uid)\d{0,2}$/i,

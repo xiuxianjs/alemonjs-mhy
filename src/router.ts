@@ -3,16 +3,12 @@ import { defineRouter, lazy } from 'alemonjs';
 
 export default defineRouter([
   {
-    // 验证码中间件
+    // 局部中间件
     handler: lazy(() => import('@src/response/mw')),
     children: [
       {
         regular: mihoyoRouteRules.help,
         handler: lazy(() => import('@src/response/mihoyo/help'))
-      },
-      {
-        regular: mihoyoRouteRules.status,
-        handler: lazy(() => import('@src/response/mihoyo/status'))
       },
       {
         regular: mihoyoRouteRules.bindCk,
