@@ -220,18 +220,31 @@ export const fetchDeviceFp = async (uid: string, _cookie: string, regionType: Mi
     });
 
     if (!res.ok) {
+      logger.warn(`[device_fp][${uid}] HTTP ${res.status} ${res.statusText}`);
+
       return null;
     }
 
-    const json = (await res.json()) as { data?: { device_fp?: string } };
+    const json = (await res.json()) as { retcode?: number; data?: { device_fp?: string } };
+
+    if (json.retcode !== undefined && json.retcode !== 0) {
+      logger.warn(`[device_fp][${uid}] retcode: ${json.retcode}`);
+
+      return null;
+    }
+
     const fp = json.data?.device_fp ?? null;
 
     if (fp) {
       await redis.setex(cacheKey, FP_CACHE_SECONDS, fp);
+    } else {
+      logger.warn(`[device_fp][${uid}] 返回数据中缺少 device_fp`);
     }
 
     return fp;
-  } catch {
+  } catch (error) {
+    logger.warn(`[device_fp][${uid}] 请求异常: ${String(error)}`);
+
     return null;
   }
 };
@@ -282,16 +295,27 @@ export const mysApiFetch = async (params: {
     return null;
   }
 
-  // 分离 query string 用于 DS 签名
-  const urlObj = new URL(urlResult.url);
-  const queryString = urlObj.search.startsWith('?') ? urlObj.search.slice(1) : urlObj.search;
-  const bodyString = body ? JSON.stringify(body) : '';
+  // 构建 body（POST 时合并 defaultBody + 调用方 body）
+  const mergedBody = urlResult.method === 'POST' ? { ...urlResult.defaultBody, ...(body ?? {}) } : undefined;
+  const bodyString = mergedBody ? JSON.stringify(mergedBody) : '';
+
+  // DS 签名：GET 用 URL query，POST 用序列化后的 body
+  const queryForDs = urlResult.query;
 
   // 构建 headers（先获取 device_fp）
   const deviceFp = await fetchDeviceFp(uid, cookie, region.type);
-  const headers = buildHeaders(queryString, bodyString, uid, region.type, deviceFp ?? undefined);
+
+  if (!deviceFp) {
+    logger.warn(`[米游社接口][${api}][${uid}] device_fp 获取失败，请求将不包含 x-rpc-device_fp`);
+  }
+
+  const headers = buildHeaders(queryForDs, bodyString, uid, region.type, deviceFp ?? undefined);
 
   headers['Cookie'] = cookie;
+
+  if (urlResult.method === 'POST') {
+    headers['Content-Type'] = 'application/json';
+  }
 
   // 请求参数
   const fetchOptions: RequestInit = {
@@ -299,13 +323,13 @@ export const mysApiFetch = async (params: {
     headers: headers as Record<string, string>
   };
 
-  if (body && urlResult.method === 'POST') {
+  if (mergedBody) {
     fetchOptions.body = bodyString;
   }
 
   const start = Date.now();
 
-  logger.info(params);
+  logger.info(`[米游社接口][${api}][${uid}] ${urlResult.method} ${urlResult.url}`);
 
   try {
     const response = await fetch(urlResult.url, fetchOptions);

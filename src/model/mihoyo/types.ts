@@ -20,9 +20,15 @@ export interface MihoyoApiEndpoint {
   host: string;
   path: string;
   method: 'GET' | 'POST';
+  /** POST 时自动将 role_id/server 注入 body */
+  includeRoleId?: boolean;
 }
 
 export interface MihoyoApiUrlResult {
   url: string;
   method: 'GET' | 'POST';
+  /** URL query string（不含 ?），用于 DS 签名 */
+  query: string;
+  /** POST 端点自动注入的 body 字段 */
+  defaultBody: Record<string, unknown>;
 }

@@ -10,8 +10,18 @@ const cnEndpoints: Record<MihoyoGame, Record<string, MihoyoApiEndpoint>> = {
     index: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/index', method: 'GET' },
     spiralAbyss: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/spiralAbyss', method: 'GET' },
     roleCombat: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/role_combat', method: 'GET' },
-    character: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/character/list', method: 'POST' },
-    characterDetail: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/character/detail', method: 'GET' },
+    hardChallenge: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/hard_challenge', method: 'GET' },
+    hardChallengePopularity: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/hard_challenge/popularity', method: 'GET' },
+    character: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/character/list', method: 'POST', includeRoleId: true },
+    characterDetail: {
+      host: 'https://api-takumi-record.mihoyo.com',
+      path: '/game_record/app/genshin/api/character/detail',
+      method: 'POST',
+      includeRoleId: true
+    },
+    detail: { host: 'https://api-takumi.mihoyo.com', path: '/event/e20200928calculate/v1/sync/avatar/detail', method: 'GET' },
+    compute: { host: 'https://api-takumi.mihoyo.com', path: '/event/e20200928calculate/v3/batch_compute', method: 'POST' },
+    avatarSkill: { host: 'https://api-takumi.mihoyo.com', path: '/event/e20200928calculate/v1/avatarSkill/list', method: 'GET' },
     ys_ledger: { host: 'https://hk4e-api.mihoyo.com', path: '/event/ys_ledger/monthInfo', method: 'GET' },
     useCdk: { host: 'https://sg-hk4e-api.hoyolab.com', path: '/common/apicdkey/api/webExchangeCdkeyHyl', method: 'GET' }
   },
@@ -23,6 +33,8 @@ const cnEndpoints: Record<MihoyoGame, Record<string, MihoyoApiEndpoint>> = {
     spiralAbyss: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/hkrpg/api/challenge', method: 'GET' },
     character: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/hkrpg/api/avatar/basic', method: 'GET' },
     avatarInfo: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/hkrpg/api/avatar/info', method: 'GET' },
+    detail: { host: 'https://api-takumi.mihoyo.com', path: '/event/rpgcalc/avatar/detail', method: 'GET' },
+    compute: { host: 'https://api-takumi.mihoyo.com', path: '/event/rpgcalc/compute', method: 'POST' },
     ys_ledger: { host: 'https://api-takumi.mihoyo.com', path: '/event/srledger/month_info', method: 'GET' },
     useCdk: { host: 'https://sg-hkrpg-api.hoyolab.com', path: '/common/apicdkey/api/webExchangeCdkeyHyl', method: 'GET' }
   },
@@ -44,8 +56,14 @@ const osEndpoints: Record<MihoyoGame, Record<string, MihoyoApiEndpoint>> = {
     dailyNote: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/dailyNote', method: 'GET' },
     index: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/index', method: 'GET' },
     spiralAbyss: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/spiralAbyss', method: 'GET' },
-    character: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/character/list', method: 'POST' },
+    character: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/character/list', method: 'POST', includeRoleId: true },
+    characterDetail: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/character/detail', method: 'POST', includeRoleId: true },
     roleCombat: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/role_combat', method: 'GET' },
+    hardChallenge: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/hard_challenge', method: 'GET' },
+    hardChallengePopularity: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/hard_challenge/popularity', method: 'GET' },
+    detail: { host: 'https://sg-public-api.hoyolab.com', path: '/event/calculateos/sync/avatar/detail', method: 'GET' },
+    compute: { host: 'https://sg-public-api.hoyolab.com', path: '/event/calculateos/compute', method: 'POST' },
+    avatarSkill: { host: 'https://sg-public-api.hoyolab.com', path: '/event/calculateos/avatar/skill_list', method: 'GET' },
     ys_ledger: { host: 'https://sg-hk4e-api.hoyolab.com', path: '/event/ysledgeros/month_info', method: 'GET' },
     useCdk: { host: 'https://sg-hk4e-api.hoyolab.com', path: '/common/apicdkey/api/webExchangeCdkeyHyl', method: 'GET' }
   },
@@ -55,6 +73,9 @@ const osEndpoints: Record<MihoyoGame, Record<string, MihoyoApiEndpoint>> = {
     index: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/hkrpg/api/index', method: 'GET' },
     spiralAbyss: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/hkrpg/api/challenge', method: 'GET' },
     character: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/hkrpg/api/avatar/basic', method: 'GET' },
+    avatarInfo: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/hkrpg/api/avatar/info', method: 'GET' },
+    detail: { host: 'https://sg-public-api.hoyolab.com', path: '/event/rpgcalc/avatar/detail', method: 'GET' },
+    compute: { host: 'https://sg-public-api.hoyolab.com', path: '/event/rpgcalc/compute', method: 'POST' },
     ys_ledger: { host: 'https://bbs-api-os.hoyolab.com', path: '/event/srledger/month_info', method: 'GET' },
     useCdk: { host: 'https://sg-hkrpg-api.hoyolab.com', path: '/common/apicdkey/api/webExchangeCdkeyHyl', method: 'GET' }
   },
@@ -96,6 +117,18 @@ export const buildMihoyoApiUrl = (request: MihoyoApiRequest): MihoyoApiUrlResult
     return null;
   }
 
+  if (endpoint.method === 'POST') {
+    // POST: role_id/server 根据 includeRoleId 决定是否注入 body，不放入 query
+    const defaultBody: Record<string, unknown> = endpoint.includeRoleId ? { role_id: request.uid, server: region.server } : {};
+
+    // 额外的 query 仍放在 URL 上（如 sr.compute 的 game=hkrpg）
+    const extraQuery = buildQueryString(request.query);
+    const url = extraQuery.length > 0 ? `${endpoint.host}${endpoint.path}?${extraQuery}` : `${endpoint.host}${endpoint.path}`;
+
+    return { url, method: 'POST', query: extraQuery, defaultBody };
+  }
+
+  // GET: role_id/server 始终放入 query
   const queryString = buildQueryString({
     role_id: request.uid,
     server: region.server,
@@ -104,8 +137,5 @@ export const buildMihoyoApiUrl = (request: MihoyoApiRequest): MihoyoApiUrlResult
 
   const finalUrl = queryString.length > 0 ? `${endpoint.host}${endpoint.path}?${queryString}` : `${endpoint.host}${endpoint.path}`;
 
-  return {
-    url: finalUrl,
-    method: endpoint.method
-  };
+  return { url: finalUrl, method: 'GET', query: queryString, defaultBody: {} };
 };

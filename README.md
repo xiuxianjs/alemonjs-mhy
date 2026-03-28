@@ -122,11 +122,20 @@ const res = await mysApiFetch({
 });
 ```
 
+## 免责声明
+
+- 勿用于以盈利为目的的场景
+
+- 代码开放，无需征得特殊同意，可任意使用。能备注来源最好，但不强求
+
+- 图片与其他素材均来自于网络，仅供交流学习使用，如有侵权请联系，会立即删除
+
 ## 引用
 
 |                          Nickname                          | Contribution         |
 | :--------------------------------------------------------: | -------------------- |
-|    [Yunzai v3.0](https://gitee.com/le-niao/Yunzai-Bot)     | 米游社API来源        |
+|       [Yunzai](https://gitee.com/le-niao/Yunzai-Bot)       | 米游社API来源        |
+|   [miao](https://github.com/yoimiya-kokomi/miao-plugin)    | 米游社API部分来源    |
 |    [cvs](https://github.com/ctrlcvs/xiaoyao-cvs-plugin)    | 米游社SToken来源     |
 |  [Hamster](https://github.com/GardenHamster/GenshinPray)   | 模拟抽卡背景素材来源 |
 |  [西风驿站](https://bbs.mihoyo.com/ys/collection/839181)   | 角色攻略图来源       |
