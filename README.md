@@ -53,7 +53,16 @@ apps:
 
 ## 安装方式2: npm
 
-> 暂未支持
+```sh
+yarn add alemonjs-mhy -W
+```
+
+- alemon.config.yaml
+
+```yaml
+apps:
+  alemonjs-mhy: true # 启动扩展
+```
 
 ## 开发指南
 
