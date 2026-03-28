@@ -45,7 +45,7 @@ export default function CkHelpCard() {
         <div
           style={{
             background: 'linear-gradient(135deg, #e8d5b0, #d3bc8e)',
-            borderRadius: '16px 16px 0 0',
+            borderRadius: '12px 12px 0 0',
             padding: '16px 24px',
             display: 'flex',
             alignItems: 'center',
@@ -64,7 +64,7 @@ export default function CkHelpCard() {
         <div
           style={{
             background: '#fff',
-            borderRadius: '0 0 16px 16px',
+            borderRadius: '0 0 12px 12px',
             padding: '24px',
             boxShadow: '0 6px 20px rgba(0,0,0,0.08)',
             display: 'flex',

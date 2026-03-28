@@ -1,6 +1,7 @@
 import { BG_IMAGES, UI_ICONS } from '@src/assets/img/index.js';
 import React from 'react';
 import HTML from './HTML.js';
+import { formatDate, getTheme } from './shared.js';
 
 // ─── 类型定义 ────────────────────────────────────────
 
@@ -109,7 +110,7 @@ const styles = {
   },
   header: {
     background: 'linear-gradient(135deg, #e8d5b0, #d3bc8e)',
-    borderRadius: '14px 14px 0 0',
+    borderRadius: '12px 12px 0 0',
     padding: '14px 20px',
     display: 'flex',
     justifyContent: 'space-between',
@@ -118,7 +119,7 @@ const styles = {
   },
   body: {
     background: '#fff',
-    borderRadius: '0 0 14px 14px',
+    borderRadius: '0 0 12px 12px',
     padding: '16px 20px',
     boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
   },
@@ -333,19 +334,19 @@ function ZzzCard({ data }: { data: ZzzDailyNoteData }) {
 
 export default function DailyNoteCard({ data }: DailyNoteCardProps) {
   const gameInfo = GAME_LABELS[data.game];
-  const now = new Date();
-  const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  const theme = getTheme(data.game);
+  const dateStr = formatDate();
 
   return (
-    <HTML style={{ width: '480px' }}>
+    <HTML style={{ width: '500px' }}>
       <div style={styles.card}>
         {/* 标题 */}
-        <div style={styles.header}>
+        <div style={{ ...styles.header, background: theme.gradient }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <img src={gameInfo.icon} style={{ width: '24px', height: '24px' }} />
-            <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a3c2a' }}>{gameInfo.name} · 实时便笺</span>
+            <span style={{ fontSize: '18px', fontWeight: 'bold', color: theme.headerText }}>{gameInfo.name} · 实时便笺</span>
           </div>
-          <span style={{ fontSize: '13px', color: '#7a6b57' }}>UID {data.uid}</span>
+          <span style={{ fontSize: '13px', color: theme.headerSub }}>UID {data.uid}</span>
         </div>
 
         {/* 内容 */}

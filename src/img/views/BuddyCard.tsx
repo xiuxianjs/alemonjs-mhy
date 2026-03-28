@@ -1,6 +1,7 @@
 import { UI_ICONS } from '@src/assets/img/index.js';
 import React from 'react';
 import HTML from './HTML.js';
+import { formatDate } from './shared.js';
 
 // ─── 类型定义 ────────────────────────────────────────
 
@@ -38,8 +39,8 @@ const styles = {
     color: '#1e1f20'
   },
   header: {
-    background: 'linear-gradient(135deg, #e8d5b0, #d3bc8e)',
-    borderRadius: '14px 14px 0 0',
+    background: 'linear-gradient(135deg, #b4e3c5, #8dd4a8)',
+    borderRadius: '12px 12px 0 0',
     padding: '14px 20px',
     display: 'flex',
     justifyContent: 'space-between',
@@ -48,7 +49,7 @@ const styles = {
   },
   body: {
     background: '#fff',
-    borderRadius: '0 0 14px 14px',
+    borderRadius: '0 0 12px 12px',
     padding: '16px 20px',
     boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
   },
@@ -102,21 +103,20 @@ function StarDisplay({ count }: { count: number }) {
 // ─── 主组件 ──────────────────────────────────────────
 
 export default function BuddyCard({ data }: BuddyCardProps) {
-  const now = new Date();
-  const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  const dateStr = formatDate();
 
   const buddies = data.list ?? [];
   const sorted = [...buddies].sort((a, b) => b.level - a.level || b.star - a.star);
 
   return (
-    <HTML style={{ width: '450px' }}>
+    <HTML style={{ width: '500px' }}>
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <img src={UI_ICONS.role} style={{ width: '24px', height: '24px' }} />
-            <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a3c2a' }}>绝区零 · 邦布</span>
+            <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#2a4a35' }}>绝区零 · 邦布</span>
           </div>
-          <span style={{ fontSize: '13px', color: '#7a6b57' }}>UID {data.uid}</span>
+          <span style={{ fontSize: '13px', color: '#4a7a5b' }}>UID {data.uid}</span>
         </div>
 
         <div style={styles.body}>

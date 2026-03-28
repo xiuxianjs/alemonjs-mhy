@@ -92,7 +92,7 @@ interface MihoyoHelpProps {
 
 export default function MihoyoHelp({ data: _data }: MihoyoHelpProps) {
   return (
-    <HTML style={{ width: '800px' }}>
+    <HTML style={{ width: '780px' }}>
       <div
         style={{
           padding: '15px',
@@ -106,7 +106,7 @@ export default function MihoyoHelp({ data: _data }: MihoyoHelpProps) {
         <div
           style={{
             background: 'linear-gradient(135deg, #e8d5b0, #d3bc8e)',
-            borderRadius: '15px',
+            borderRadius: '12px',
             padding: '14px 20px',
             marginBottom: '12px',
             boxShadow: '0 5px 10px rgba(0,0,0,0.12)',
@@ -128,7 +128,7 @@ export default function MihoyoHelp({ data: _data }: MihoyoHelpProps) {
             key={ci}
             style={{
               background: '#fff',
-              borderRadius: '15px',
+              borderRadius: '12px',
               marginBottom: '12px',
               boxShadow: '0 5px 10px rgba(0,0,0,0.08)',
               overflow: 'hidden'
@@ -228,7 +228,7 @@ export default function MihoyoHelp({ data: _data }: MihoyoHelpProps) {
         <div
           style={{
             background: '#fff',
-            borderRadius: '15px',
+            borderRadius: '12px',
             padding: '10px 15px',
             boxShadow: '0 5px 10px rgba(0,0,0,0.06)',
             display: 'flex',

@@ -1,6 +1,7 @@
 import { UI_ICONS } from '@src/assets/img/index.js';
 import React from 'react';
 import HTML from './HTML.js';
+import { formatDate } from './shared.js';
 
 // ─── 类型定义 ────────────────────────────────────────
 
@@ -81,7 +82,7 @@ const styles = {
   },
   header: {
     background: 'linear-gradient(135deg, #e8d5b0, #d3bc8e)',
-    borderRadius: '14px 14px 0 0',
+    borderRadius: '12px 12px 0 0',
     padding: '14px 20px',
     display: 'flex',
     justifyContent: 'space-between',
@@ -90,7 +91,7 @@ const styles = {
   },
   body: {
     background: '#fff',
-    borderRadius: '0 0 14px 14px',
+    borderRadius: '0 0 12px 12px',
     padding: '16px 20px',
     boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
   },
@@ -167,8 +168,7 @@ function StatRow({ label, value }: { label: string; value: string | number }) {
 // ─── 主组件 ──────────────────────────────────────────
 
 export default function RoleCombatCard({ data }: RoleCombatCardProps) {
-  const now = new Date();
-  const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  const dateStr = formatDate();
 
   const noData = !data.has_data || data.data.length === 0;
   const noDetail = data.has_data && !data.has_detail_data;
@@ -184,7 +184,7 @@ export default function RoleCombatCard({ data }: RoleCombatCardProps) {
   }
 
   return (
-    <HTML style={{ width: '700px' }}>
+    <HTML style={{ width: '600px' }}>
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
