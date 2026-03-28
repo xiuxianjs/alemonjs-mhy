@@ -1,4 +1,4 @@
-import router from './router';
+import router from './response/router';
 
 // ─── 导出供其他插件使用的 API ────────────────────────
 
@@ -9,10 +9,10 @@ export type { QueryResult } from '@src/model/mihoyo/query';
 export type { BbsSignResult, SignResult, SignRoleResult } from '@src/model/mihoyo/sign';
 export type { BindStokenResult, QrCodeStatus, QrSession, StokenData } from '@src/model/mihoyo/stoken';
 export type { MihoyoGame, MihoyoRegionProfile, MihoyoRegionType } from '@src/model/mihoyo/types';
-export type { MihoyoContext } from '@src/mw.js';
+export type { MihoyoContext } from '@src/model/mw.js';
 
 // 游戏类型检测
-export { resolveGame } from '@src/mw.js';
+export { resolveGame } from '@src/model/mw.js';
 
 // 区服识别
 export { resolveMihoyoRegion } from '@src/model/mihoyo/region';
