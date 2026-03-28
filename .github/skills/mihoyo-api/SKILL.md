@@ -25,7 +25,11 @@ src/model/mihoyo/
 ```typescript
 type MihoyoGame = 'gs' | 'sr' | 'zzz';
 type MihoyoRegionType = 'cn' | 'global';
-interface MihoyoRegionProfile { game: MihoyoGame; server: string; type: MihoyoRegionType; }
+interface MihoyoRegionProfile {
+  game: MihoyoGame;
+  server: string;
+  type: MihoyoRegionType;
+}
 ```
 
 ## DS 签名机制
@@ -63,29 +67,29 @@ Body 必须包含: `seed_id`, `device_id`, `platform`, `seed_time`, `ext_fields`
 
 ## UID 区服映射 (region.ts)
 
-| UID 前缀 | GS server | SR server | 类型 |
-|----------|-----------|-----------|------|
-| 1-4 | cn_gf01 | prod_gf_cn | cn |
-| 5 | cn_qd01 | prod_qd_cn | cn |
-| 6 | os_usa | prod_official_usa | global |
-| 7 | os_euro | prod_official_euro | global |
-| 8/18 | os_asia | prod_official_asia | global |
-| 9 | os_cht | prod_official_cht | global |
+| UID 前缀 | GS server | SR server          | 类型   |
+| -------- | --------- | ------------------ | ------ |
+| 1-4      | cn_gf01   | prod_gf_cn         | cn     |
+| 5        | cn_qd01   | prod_qd_cn         | cn     |
+| 6        | os_usa    | prod_official_usa  | global |
+| 7        | os_euro   | prod_official_euro | global |
+| 8/18     | os_asia   | prod_official_asia | global |
+| 9        | os_cht    | prod_official_cht  | global |
 
 ZZZ 使用不同的前缀映射（10/15/13/17 对应不同海外区服）。
 
 ## Retcode 常见错误
 
-| retcode | 含义 |
-|---------|------|
-| 0 | 成功 |
-| -100 | Cookie 已失效 |
-| 10001 | Cookie 无效 |
-| 10101 | 查询次数超限 (30次/天) |
-| 10102 | 数据未公开 |
-| 10103 | Cookie 无效 |
-| 5003 | 接口数据异常 |
-| 1008 | 账号已封禁 |
+| retcode | 含义                   |
+| ------- | ---------------------- |
+| 0       | 成功                   |
+| -100    | Cookie 已失效          |
+| 10001   | Cookie 无效            |
+| 10101   | 查询次数超限 (30次/天) |
+| 10102   | 数据未公开             |
+| 10103   | Cookie 无效            |
+| 5003    | 接口数据异常           |
+| 1008    | 账号已封禁             |
 
 ## 调试要点
 
