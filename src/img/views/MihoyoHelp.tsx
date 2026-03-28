@@ -1,3 +1,4 @@
+import { UI_ICONS } from '@src/assets/img/index.js';
 import React from 'react';
 import HTML from './HTML.js';
 
@@ -22,61 +23,61 @@ const MHY_HELP: HelpCategory[] = [
   {
     title: '账号绑定',
     items: [
-      { icon: '🔑', cmd: '#绑定ck', desc: '绑定米游社Cookie（私聊发送）' },
-      { icon: '🎯', cmd: '#绑定uid', desc: '手动绑定游戏UID' },
-      { icon: '📋', cmd: '#我的uid', desc: '查看已绑定的UID列表' },
-      { icon: '🍪', cmd: '#我的ck', desc: '查看Cookie绑定状态' },
-      { icon: '🗑️', cmd: '#删除ck / #删除uid', desc: '删除Cookie或解除UID绑定' },
-      { icon: '❓', cmd: '#ck帮助', desc: 'Cookie获取教程' },
-      { icon: '✅', cmd: '#检查ck', desc: '验证Cookie是否有效' },
-      { icon: '📱', cmd: '#扫码登录', desc: '米游社扫码绑定Cookie+Stoken' },
-      { icon: '🔐', cmd: '#绑定stoken', desc: '手动绑定Stoken（私聊发送）' },
-      { icon: '🪪', cmd: '#我的stoken', desc: '查看Stoken绑定状态' },
-      { icon: '🧹', cmd: '#删除stoken', desc: '删除已绑定的Stoken' }
+      { icon: UI_ICONS.bind, cmd: '#绑定ck', desc: '绑定米游社Cookie（私聊发送）' },
+      { icon: UI_ICONS.bind, cmd: '#绑定uid', desc: '手动绑定游戏UID' },
+      { icon: UI_ICONS.record, cmd: '#我的uid', desc: '查看已绑定的UID列表' },
+      { icon: UI_ICONS.record, cmd: '#我的ck', desc: '查看Cookie绑定状态' },
+      { icon: UI_ICONS.record, cmd: '#删除ck / #删除uid', desc: '删除Cookie或解除UID绑定' },
+      { icon: UI_ICONS.help, cmd: '#ck帮助', desc: 'Cookie获取教程' },
+      { icon: UI_ICONS.checkin, cmd: '#检查ck', desc: '验证Cookie是否有效' },
+      { icon: UI_ICONS.miyoushe, cmd: '#扫码登录', desc: '米游社扫码绑定Cookie+Stoken' },
+      { icon: UI_ICONS.bind, cmd: '#绑定stoken', desc: '手动绑定Stoken（私聊发送）' },
+      { icon: UI_ICONS.record, cmd: '#我的stoken', desc: '查看Stoken绑定状态' },
+      { icon: UI_ICONS.record, cmd: '#删除stoken', desc: '删除已绑定的Stoken' }
     ]
   },
   {
     title: '原神查询指令',
     items: [
-      { icon: '👤', cmd: '#角色', desc: '角色面板概览（等级/命座）' },
-      { icon: '🗺️', cmd: '#探索', desc: '宝箱·神瞳·世界探索度' },
-      { icon: '⚔️', cmd: '#深渊 / #上期深渊', desc: '深境螺旋数据' },
-      { icon: '🗡️', cmd: '#武器 / #五星武器', desc: '武器列表与装备情况' },
-      { icon: '🌿', cmd: '#体力 / #树脂', desc: '实时树脂与每日委托' },
-      { icon: '💎', cmd: '#原石 / #札记', desc: '原石收入月度统计' },
-      { icon: '🎭', cmd: '#剧诗', desc: '幻想真境剧诗阵容' },
-      { icon: '🃏', cmd: '#七圣召唤查询', desc: '七圣召唤牌组/卡牌查询' },
-      { icon: '🎂', cmd: '#留影叙佳期 / #生日卡', desc: '领取生日角色卡片' }
+      { icon: UI_ICONS.role, cmd: '#角色', desc: '角色面板概览（等级/命座）' },
+      { icon: UI_ICONS.stats, cmd: '#探索', desc: '宝箱·神瞳·世界探索度' },
+      { icon: UI_ICONS.abyss, cmd: '#深渊 / #上期深渊', desc: '深境螺旋数据' },
+      { icon: UI_ICONS.weapon, cmd: '#武器 / #五星武器', desc: '武器列表与装备情况' },
+      { icon: UI_ICONS.resin, cmd: '#体力 / #树脂', desc: '实时树脂与每日委托' },
+      { icon: UI_ICONS.primogem, cmd: '#原石 / #札记', desc: '原石收入月度统计' },
+      { icon: UI_ICONS.team, cmd: '#剧诗', desc: '幻想真境剧诗阵容' },
+      { icon: UI_ICONS.tcg, cmd: '#七圣召唤查询', desc: '七圣召唤牌组/卡牌查询' },
+      { icon: UI_ICONS.sign, cmd: '#留影叙佳期 / #生日卡', desc: '领取生日角色卡片' }
     ]
   },
   {
     title: '星穹铁道',
     items: [
-      { icon: '🚄', cmd: '#星铁角色', desc: '角色面板与星魂等级' },
-      { icon: '⚡', cmd: '#星铁体力', desc: '开拓力与委托状态' },
-      { icon: '🌀', cmd: '#星铁深渊', desc: '忘却之庭/虚构叙事' },
-      { icon: '✨', cmd: '#星琼', desc: '星琼收入月度统计' }
+      { icon: UI_ICONS.role, cmd: '#星铁角色', desc: '角色面板与星魂等级' },
+      { icon: UI_ICONS.resin, cmd: '#星铁体力', desc: '开拓力与委托状态' },
+      { icon: UI_ICONS.abyss, cmd: '#星铁深渊', desc: '忘却之庭/虚构叙事' },
+      { icon: UI_ICONS.primogem, cmd: '#星琼', desc: '星琼收入月度统计' }
     ]
   },
   {
     title: '绝区零',
     items: [
-      { icon: '📺', cmd: '#绝区零角色', desc: '代理人面板数据' },
-      { icon: '🔋', cmd: '#绝区零体力', desc: '电量与活跃度' },
-      { icon: '🐾', cmd: '#邦布', desc: '邦布收集列表' }
+      { icon: UI_ICONS.role, cmd: '#绝区零角色', desc: '代理人面板数据' },
+      { icon: UI_ICONS.resin, cmd: '#绝区零体力', desc: '电量与活跃度' },
+      { icon: UI_ICONS.role, cmd: '#邦布', desc: '邦布收集列表' }
     ]
   },
   {
     title: '其他指令',
     items: [
-      { icon: '📰', cmd: '#公告 / #资讯 / #活动', desc: '米游社官方资讯' },
-      { icon: '🎁', cmd: '#兑换码', desc: '查询直播兑换码' },
-      { icon: '🎟️', cmd: '#兑换码使用 <CDK>', desc: '使用CDK兑换码' },
-      { icon: '🎉', cmd: '#原神签到 / #签到', desc: '游戏每日签到' },
-      { icon: '🌟', cmd: '#星铁签到', desc: '星穹铁道每日签到' },
-      { icon: '🪙', cmd: '#米游社签到', desc: '米游币社区签到' },
-      { icon: '💰', cmd: '#充值记录', desc: '充值/消费记录统计' },
-      { icon: '📖', cmd: '#米游社帮助', desc: '查看本帮助图' }
+      { icon: UI_ICONS.miyoushe, cmd: '#公告 / #资讯 / #活动', desc: '米游社官方资讯' },
+      { icon: UI_ICONS.primogem, cmd: '#兑换码', desc: '查询直播兑换码' },
+      { icon: UI_ICONS.primogem, cmd: '#兑换码使用 <CDK>', desc: '使用CDK兑换码' },
+      { icon: UI_ICONS.sign, cmd: '#原神签到 / #签到', desc: '游戏每日签到' },
+      { icon: UI_ICONS.sign, cmd: '#星铁签到', desc: '星穹铁道每日签到' },
+      { icon: UI_ICONS.checkin, cmd: '#米游社签到', desc: '米游币社区签到' },
+      { icon: UI_ICONS.ledger, cmd: '#充值记录', desc: '充值/消费记录统计' },
+      { icon: UI_ICONS.help, cmd: '#米游社帮助', desc: '查看本帮助图' }
     ]
   }
 ];
@@ -115,7 +116,7 @@ export default function MihoyoHelp({ data: _data }: MihoyoHelpProps) {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '26px' }}>🎮</span>
+            <img src={UI_ICONS.paimon} style={{ width: '28px', height: '28px' }} />
             <span style={{ fontSize: '22px', fontWeight: 'bold', color: '#4a3a20' }}>米游社 · 指令帮助</span>
           </div>
           <span style={{ fontSize: '13px', color: '#6b5838' }}>Powered by alemonjs</span>
@@ -187,12 +188,12 @@ export default function MihoyoHelp({ data: _data }: MihoyoHelpProps) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontSize: '20px',
                       marginBottom: '6px',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.08)'
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.08)',
+                      overflow: 'hidden'
                     }}
                   >
-                    {item.icon}
+                    <img src={item.icon} style={{ width: '28px', height: '28px' }} />
                   </div>
                   {/* 指令 */}
                   <div

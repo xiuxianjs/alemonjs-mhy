@@ -1,3 +1,4 @@
+import { BG_IMAGES, UI_ICONS } from '@src/assets/img/index.js';
 import React from 'react';
 import HTML from './HTML.js';
 
@@ -91,9 +92,9 @@ const formatRecoverAt = (seconds: number): string => {
 const percent = (cur: number, max: number): number => (max > 0 ? (cur / max) * PERCENT_100 : 0);
 
 const GAME_LABELS: Record<string, { name: string; color: string; icon: string }> = {
-  gs: { name: '原神', color: '#8b6d3f', icon: '🌿' },
-  sr: { name: '星穹铁道', color: '#5c6bc0', icon: '🚂' },
-  zzz: { name: '绝区零', color: '#e65100', icon: '⚡' }
+  gs: { name: '原神', color: '#8b6d3f', icon: BG_IMAGES.genshinLogo },
+  sr: { name: '星穹铁道', color: '#5c6bc0', icon: UI_ICONS.role },
+  zzz: { name: '绝区零', color: '#e65100', icon: UI_ICONS.role }
 };
 
 // ─── 子组件 ──────────────────────────────────────────
@@ -183,10 +184,12 @@ function ProgressBar({ value, max, color }: { value: number; max: number; color:
 }
 
 function Row({ icon, label, value, sub, isFull, isLast }: { icon: string; label: string; value: string; sub?: string; isFull?: boolean; isLast?: boolean }) {
+  const isUrl = icon.startsWith('/') || icon.startsWith('http');
+
   return (
     <div style={isLast ? styles.rowLast : styles.row}>
       <div style={styles.label}>
-        <span>{icon}</span>
+        {isUrl ? <img src={icon} style={{ width: '20px', height: '20px' }} /> : <span>{icon}</span>}
         <span>{label}</span>
       </div>
       <div style={{ textAlign: 'right' }}>
@@ -235,7 +238,7 @@ function GsCard({ data }: { data: GsDailyNoteData }) {
   return (
     <>
       <Row
-        icon='🌙'
+        icon={UI_ICONS.resin}
         label='原粹树脂'
         value={`${data.current_resin} / ${data.max_resin}`}
         sub={resinFull ? '已满' : `${formatTime(resinSec)} · ${formatRecoverAt(resinSec)}`}
@@ -245,9 +248,14 @@ function GsCard({ data }: { data: GsDailyNoteData }) {
 
       <div style={{ height: '8px' }} />
 
-      <Row icon='📋' label='每日委托' value={`${data.finished_task_num} / ${data.total_task_num}`} isFull={data.finished_task_num >= data.total_task_num} />
       <Row
-        icon='💰'
+        icon={UI_ICONS.checkin}
+        label='每日委托'
+        value={`${data.finished_task_num} / ${data.total_task_num}`}
+        isFull={data.finished_task_num >= data.total_task_num}
+      />
+      <Row
+        icon={UI_ICONS.primogem}
         label='洞天宝钱'
         value={`${data.current_home_coin} / ${data.max_home_coin}`}
         sub={coinFull ? '已满' : formatTime(coinSec)}
@@ -334,7 +342,7 @@ export default function DailyNoteCard({ data }: DailyNoteCardProps) {
         {/* 标题 */}
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '20px' }}>{gameInfo.icon}</span>
+            <img src={gameInfo.icon} style={{ width: '24px', height: '24px' }} />
             <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a3c2a' }}>{gameInfo.name} · 实时便笺</span>
           </div>
           <span style={{ fontSize: '13px', color: '#7a6b57' }}>UID {data.uid}</span>

@@ -1,3 +1,4 @@
+import { UI_ICONS } from '@src/assets/img/index.js';
 import React from 'react';
 import HTML from './HTML.js';
 
@@ -164,7 +165,7 @@ export default function WeaponCard({ data }: WeaponCardProps) {
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '20px' }}>⚔️</span>
+            <img src={UI_ICONS.weapon} style={{ width: '24px', height: '24px' }} />
             <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a3c2a' }}>原神 · 武器{filterLabel}</span>
           </div>
           <span style={{ fontSize: '13px', color: '#7a6b57' }}>UID {uid}</span>

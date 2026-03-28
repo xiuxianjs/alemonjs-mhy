@@ -1,3 +1,4 @@
+import { UI_ICONS } from '@src/assets/img/index.js';
 import React from 'react';
 import HTML from './HTML.js';
 
@@ -276,8 +277,8 @@ function SrContent({ data }: { data: SrLedgerData }) {
 // ─── 主组件 ──────────────────────────────────────────
 
 const TITLES: Record<string, { name: string; icon: string }> = {
-  gs: { name: '原神 · 札记', icon: '💎' },
-  sr: { name: '星穹铁道 · 开拓月历', icon: '🚂' }
+  gs: { name: '原神 · 札记', icon: UI_ICONS.ledger },
+  sr: { name: '星穹铁道 · 开拓月历', icon: UI_ICONS.ledger }
 };
 
 export default function LedgerCard({ data }: LedgerCardProps) {
@@ -291,7 +292,7 @@ export default function LedgerCard({ data }: LedgerCardProps) {
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '20px' }}>{info.icon}</span>
+            <img src={info.icon} style={{ width: '24px', height: '24px' }} />
             <div>
               <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a3c2a' }}>{info.name}</div>
               <div style={{ fontSize: '12px', color: '#7a6b57' }}>{month}</div>

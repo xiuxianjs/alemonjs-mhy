@@ -1,3 +1,4 @@
+import { UI_ICONS } from '@src/assets/img/index.js';
 import React from 'react';
 import HTML from './HTML.js';
 
@@ -224,8 +225,8 @@ function SrContent({ data }: { data: SrAbyssData }) {
 // ─── 主组件 ──────────────────────────────────────────
 
 const TITLES: Record<string, { name: string; icon: string }> = {
-  gs: { name: '原神 · 深境螺旋', icon: '🌀' },
-  sr: { name: '星穹铁道 · 忘却之庭', icon: '🚂' }
+  gs: { name: '原神 · 深境螺旋', icon: UI_ICONS.abyss },
+  sr: { name: '星穹铁道 · 忘却之庭', icon: UI_ICONS.abyss }
 };
 
 export default function SpiralAbyssCard({ data }: SpiralAbyssCardProps) {
@@ -238,7 +239,7 @@ export default function SpiralAbyssCard({ data }: SpiralAbyssCardProps) {
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '20px' }}>{info.icon}</span>
+            <img src={info.icon} style={{ width: '24px', height: '24px' }} />
             <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a3c2a' }}>{info.name}</span>
           </div>
           <span style={{ fontSize: '13px', color: '#7a6b57' }}>UID {data.uid}</span>

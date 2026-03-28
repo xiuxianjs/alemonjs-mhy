@@ -1,3 +1,4 @@
+import { BG_IMAGES, ELEMENT_ICONS, REGION_ICONS, UI_ICONS } from '@src/assets/img/index.js';
 import React from 'react';
 import HTML from './HTML.js';
 
@@ -69,18 +70,18 @@ export interface RoleExploreCardProps {
 // ─── 样式 ────────────────────────────────────────────
 
 const GAME_LABELS: Record<string, { name: string; icon: string; color: string }> = {
-  gs: { name: '原神', icon: '🌿', color: '#8b6d3f' },
-  sr: { name: '星穹铁道', icon: '🚂', color: '#5c6bc0' },
-  zzz: { name: '绝区零', icon: '⚡', color: '#e65100' }
+  gs: { name: '原神', icon: BG_IMAGES.genshinLogo, color: '#8b6d3f' },
+  sr: { name: '星穹铁道', icon: UI_ICONS.role, color: '#5c6bc0' },
+  zzz: { name: '绝区零', icon: UI_ICONS.role, color: '#e65100' }
 };
 
-const OCULUS_NAMES: Array<{ key: string; label: string; icon: string }> = [
-  { key: 'anemoculus_number', label: '风神瞳', icon: '🌬️' },
-  { key: 'geoculus_number', label: '岩神瞳', icon: '🪨' },
-  { key: 'electroculus_number', label: '雷神瞳', icon: '⚡' },
-  { key: 'dendroculus_number', label: '草神瞳', icon: '🌿' },
-  { key: 'hydroculus_number', label: '水神瞳', icon: '💧' },
-  { key: 'pyroculus_number', label: '火神瞳', icon: '🔥' }
+const OCULUS_NAMES: Array<{ key: string; label: string; element: string }> = [
+  { key: 'anemoculus_number', label: '风神瞳', element: '风' },
+  { key: 'geoculus_number', label: '岩神瞳', element: '岩' },
+  { key: 'electroculus_number', label: '雷神瞳', element: '雷' },
+  { key: 'dendroculus_number', label: '草神瞳', element: '草' },
+  { key: 'hydroculus_number', label: '水神瞳', element: '水' },
+  { key: 'pyroculus_number', label: '火神瞳', element: '火' }
 ];
 
 const styles = {
@@ -158,10 +159,13 @@ const styles = {
   }
 };
 
-function StatPair({ label, value }: { label: string; value: string | number }) {
+function StatPair({ label, value, icon }: { label: string; value: string | number; icon?: string }) {
   return (
     <div style={styles.statItem}>
-      <span style={styles.statLabel}>{label}</span>
+      <span style={{ ...styles.statLabel, display: 'flex', alignItems: 'center', gap: '4px' }}>
+        {icon && <img src={icon} style={{ width: '16px', height: '16px' }} />}
+        {label}
+      </span>
       <span style={styles.statValue}>{value}</span>
     </div>
   );
@@ -208,8 +212,9 @@ function GsContent({ data }: { data: GsExploreData }) {
         <div style={styles.statGrid}>
           {OCULUS_NAMES.map((o, i) => {
             const val = (s as unknown as Record<string, number>)[o.key] ?? 0;
+            const elemIcon = ELEMENT_ICONS[o.element];
 
-            return val > 0 ? <StatPair key={i} label={`${o.icon} ${o.label}`} value={val} /> : null;
+            return val > 0 ? <StatPair key={i} label={o.label} value={val} icon={elemIcon} /> : null;
           })}
         </div>
       </div>
@@ -237,7 +242,10 @@ function GsContent({ data }: { data: GsExploreData }) {
               return (
                 <div key={i}>
                   <div style={styles.exploreRow}>
-                    <span style={{ fontSize: '13px', color: '#6b5e4f' }}>{w.name}</span>
+                    <span style={{ fontSize: '13px', color: '#6b5e4f', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      {REGION_ICONS[w.name] && <img src={REGION_ICONS[w.name]} style={{ width: '18px', height: '18px', borderRadius: '3px' }} />}
+                      {w.name}
+                    </span>
                     <span style={{ fontSize: '13px', fontWeight: 'bold' }}>{pct.toFixed(1)}%</span>
                   </div>
                   <ProgressBar value={pct} max={100} color='#8b6d3f' />
@@ -296,7 +304,7 @@ export default function RoleExploreCard({ data }: RoleExploreCardProps) {
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '20px' }}>{gameInfo.icon}</span>
+            <img src={gameInfo.icon} style={{ width: '24px', height: '24px' }} />
             <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a3c2a' }}>{gameInfo.name} · 探索</span>
           </div>
           <span style={{ fontSize: '13px', color: '#7a6b57' }}>UID {data.uid}</span>

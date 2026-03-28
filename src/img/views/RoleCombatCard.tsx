@@ -1,3 +1,4 @@
+import { UI_ICONS } from '@src/assets/img/index.js';
 import React from 'react';
 import HTML from './HTML.js';
 
@@ -187,7 +188,7 @@ export default function RoleCombatCard({ data }: RoleCombatCardProps) {
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '20px' }}>🎭</span>
+            <img src={UI_ICONS.team} style={{ width: '24px', height: '24px' }} />
             <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a3c2a' }}>幻想真境剧诗</span>
           </div>
           <span style={{ fontSize: '13px', color: '#7a6b57' }}>UID {data.uid}</span>

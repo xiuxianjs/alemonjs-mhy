@@ -1,3 +1,4 @@
+import { UI_ICONS } from '@src/assets/img/index.js';
 import React from 'react';
 import HTML from './HTML.js';
 
@@ -112,7 +113,7 @@ export default function BuddyCard({ data }: BuddyCardProps) {
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '20px' }}>🤖</span>
+            <img src={UI_ICONS.role} style={{ width: '24px', height: '24px' }} />
             <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a3c2a' }}>绝区零 · 邦布</span>
           </div>
           <span style={{ fontSize: '13px', color: '#7a6b57' }}>UID {data.uid}</span>

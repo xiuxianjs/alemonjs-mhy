@@ -1,3 +1,4 @@
+import { BG_IMAGES, ELEMENT_ICONS, UI_ICONS } from '@src/assets/img/index.js';
 import React from 'react';
 import HTML from './HTML.js';
 
@@ -94,9 +95,9 @@ const RARITY_COLORS: Record<number, string> = {
 };
 
 const GAME_LABELS: Record<string, { name: string; color: string; icon: string }> = {
-  gs: { name: '原神', color: '#8b6d3f', icon: '🌿' },
-  sr: { name: '星穹铁道', color: '#5c6bc0', icon: '🚂' },
-  zzz: { name: '绝区零', color: '#e65100', icon: '⚡' }
+  gs: { name: '原神', color: '#8b6d3f', icon: BG_IMAGES.genshinLogo },
+  sr: { name: '星穹铁道', color: '#5c6bc0', icon: UI_ICONS.role },
+  zzz: { name: '绝区零', color: '#e65100', icon: UI_ICONS.role }
 };
 
 const styles = {
@@ -265,7 +266,10 @@ function GsContent({ data }: { data: GsIndexData }) {
           <div style={styles.sectionTitle}>角色 (Top {top.length})</div>
           {top.map((a, i) => (
             <div key={i} style={styles.avatarRow}>
-              <span style={{ ...styles.avatarName, color: RARITY_COLORS[a.rarity] ?? '#1e1f20' }}>{a.name}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                {ELEMENT_ICONS[a.element] && <img src={ELEMENT_ICONS[a.element]} style={{ width: '16px', height: '16px' }} />}
+                <span style={{ ...styles.avatarName, color: RARITY_COLORS[a.rarity] ?? '#1e1f20' }}>{a.name}</span>
+              </div>
               <span style={styles.avatarInfo}>
                 Lv.{a.level} ★{a.rarity} 命座{a.actived_constellation_num} 好感{a.fetter}
               </span>
@@ -364,7 +368,7 @@ export default function PlayerIndexCard({ data }: PlayerIndexCardProps) {
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '20px' }}>{gameInfo.icon}</span>
+            <img src={gameInfo.icon} style={{ width: '24px', height: '24px' }} />
             <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a3c2a' }}>{gameInfo.name} · 角色面板</span>
           </div>
           <span style={{ fontSize: '13px', color: '#7a6b57' }}>UID {data.uid}</span>
