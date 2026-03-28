@@ -264,36 +264,28 @@ export interface MysApiResponse {
   api?: string;
 }
 
+/** 清除指定 UID 的 device_fp 缓存 */
+const clearDeviceFpCache = async (uid: string): Promise<void> => {
+  const redis = getIoRedis();
+
+  await redis.del(mihoyoKeys.deviceFp(uid));
+};
+
 /**
- * 向米游社发起一次 API 请求
+ * 执行一次米游社 HTTP 请求（内部方法，不含重试逻辑）
  */
-export const mysApiFetch = async (params: {
+const doFetch = async (params: {
   uid: string;
   cookie: string;
   api: string;
   game: MihoyoGame;
-  query?: Record<string, string | number | boolean>;
+  urlResult: import('./types').MihoyoApiUrlResult;
   body?: Record<string, unknown>;
   cached?: boolean;
 }): Promise<MysApiResponse | null> => {
-  const { uid, cookie, api, game, query, body, cached } = params;
+  const { uid, cookie, api, game, urlResult, body, cached } = params;
   const redis = getIoRedis();
   const region = resolveMihoyoRegion(uid, game);
-
-  // 检查缓存
-  const cacheKey = buildCacheKey(uid, api, game);
-  const cachedData = await redis.get(cacheKey);
-
-  if (cachedData) {
-    return JSON.parse(cachedData) as MysApiResponse;
-  }
-
-  // 构建 URL
-  const urlResult = buildMihoyoApiUrl({ api, game, uid, query });
-
-  if (!urlResult) {
-    return null;
-  }
 
   // 构建 body（POST 时合并 defaultBody + 调用方 body）
   const mergedBody = urlResult.method === 'POST' ? { ...urlResult.defaultBody, ...(body ?? {}) } : undefined;
@@ -358,7 +350,7 @@ export const mysApiFetch = async (params: {
 
     // 写入缓存
     if (cached && res.retcode === 0) {
-      await redis.setex(cacheKey, mihoyoConstants.cacheSeconds, JSON.stringify(res));
+      await redis.setex(buildCacheKey(uid, api, game), mihoyoConstants.cacheSeconds, JSON.stringify(res));
     }
 
     return res;
@@ -367,6 +359,63 @@ export const mysApiFetch = async (params: {
 
     return null;
   }
+};
+
+/** 遇到验证码时自动重试的 retcode */
+const RETCODE_VERIFICATION = new Set([1034, 10035]);
+
+/**
+ * 向米游社发起一次 API 请求
+ * 遇到 1034/10035 时自动刷新 device_fp 重试一次
+ */
+export const mysApiFetch = async (params: {
+  uid: string;
+  cookie: string;
+  api: string;
+  game: MihoyoGame;
+  query?: Record<string, string | number | boolean>;
+  body?: Record<string, unknown>;
+  cached?: boolean;
+}): Promise<MysApiResponse | null> => {
+  const { uid, cookie, api, game, query, body, cached } = params;
+  const redis = getIoRedis();
+
+  // 检查缓存
+  const cacheKey = buildCacheKey(uid, api, game);
+  const cachedData = await redis.get(cacheKey);
+
+  if (cachedData) {
+    return JSON.parse(cachedData) as MysApiResponse;
+  }
+
+  // 构建 URL
+  const urlResult = buildMihoyoApiUrl({ api, game, uid, query });
+
+  if (!urlResult) {
+    return null;
+  }
+
+  // 首次请求
+  const res = await doFetch({ uid, cookie, api, game, urlResult, body, cached });
+
+  // 遇到验证码 → 刷新 device_fp 重试一次
+  if (res && RETCODE_VERIFICATION.has(res.retcode)) {
+    logger.mark(`[米游社接口][${api}][${uid}] 遇到验证码(${res.retcode})，刷新 device_fp 后重试`);
+    await clearDeviceFpCache(uid);
+
+    const retryRes = await doFetch({ uid, cookie, api, game, urlResult, body, cached });
+
+    if (retryRes && !RETCODE_VERIFICATION.has(retryRes.retcode)) {
+      return retryRes;
+    }
+
+    // 重试仍失败，返回原始结果
+    logger.mark(`[米游社接口][${api}][${uid}] 重试后仍遇到验证码，建议用户稍后再试`);
+
+    return retryRes ?? res;
+  }
+
+  return res;
 };
 
 // ─── Cookie 验证 ────────────────────────────────────
