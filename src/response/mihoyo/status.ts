@@ -19,9 +19,9 @@ export default (e: EventsEnum) => {
   md.addNewline();
   md.addText('- phase-3: 已完成（体力/角色面板/深渊查询）');
   md.addNewline();
-  md.addText('- phase-4: 待开发（抽卡/充值链路）');
+  md.addText('- phase-4: 已完成（探索/武器/邦布/剧诗/札记/兑换码/公告/CK工具）');
   md.addNewline();
-  md.addText('- phase-5: 待开发（公告推送任务）');
+  md.addText('- phase-5: 待开发（抽卡记录/充值记录/authkey链路）');
 
   format.addMarkdown(md);
 

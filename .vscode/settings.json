@@ -147,6 +147,7 @@
     "sadd",
     "setex",
     "smembers",
+    "tttgbnumber",
     "uids",
     "xiuxian"
   ]

@@ -1,30 +1,22 @@
-import cssURL from '@src/assets/css/input.scss';
-import tttgbnumberURL from '@src/assets/font/tttgbnumber.ttf';
+import URL_SCSS from '@src/assets/css/input.scss';
+import URL_TTT from '@src/assets/font/tttgbnumber.ttf';
 import classNames from 'classnames';
-import { LinkStyleSheet } from 'jsxp';
 import React from 'react';
 
-const HTML = (
-  props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLBodyElement>, HTMLBodyElement> & {
-    linkStyleSheets?: string[];
-  }
-) => {
-  const { linkStyleSheets = [], dangerouslySetInnerHTML, children, className, ...reSet } = props;
+const HTML = (props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLBodyElement>, HTMLBodyElement> & {}) => {
+  const { children, className, ...reSet } = props;
 
   return (
     <html className='p-0 m-0'>
       <head>
-        <LinkStyleSheet src={cssURL} />
-        {linkStyleSheets.map((src, index) => (
-          <LinkStyleSheet key={index} src={src} />
-        ))}
+        <link type='text/css' rel='stylesheet' href={URL_SCSS} />
         <meta httpEquiv='content-type' content='text/html;charset=utf-8' />
         <style
           dangerouslySetInnerHTML={{
             __html: `
               @font-face {
                 font-family: 'tttgbnumber';
-                src: url('${tttgbnumberURL}'); 
+                src: url('${URL_TTT}'); 
                 font-weight: normal; 
                 font-style: normal; 
               }
@@ -35,7 +27,6 @@ const HTML = (
             `
           }}
         />
-        {dangerouslySetInnerHTML && <style dangerouslySetInnerHTML={dangerouslySetInnerHTML} />}
       </head>
       <body className={classNames('p-0 m-0 w-full text-center', className)} {...reSet}>
         {children}

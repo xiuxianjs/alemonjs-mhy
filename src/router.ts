@@ -7,10 +7,6 @@ export default defineRouter([
     handler: lazy(() => import('@src/response/mw')),
     children: [
       {
-        regular: /^(!|！|\/|#|＃)mhy(帮助|help|menu|菜单)\s*\d*$/,
-        handler: lazy(() => import('@src/response/help'))
-      },
-      {
         regular: mihoyoRouteRules.help,
         handler: lazy(() => import('@src/response/mihoyo/help'))
       },
@@ -53,6 +49,42 @@ export default defineRouter([
       {
         regular: mihoyoRouteRules.spiralAbyss,
         handler: lazy(() => import('@src/response/mihoyo/spiralAbyss'))
+      },
+      {
+        regular: mihoyoRouteRules.roleExplore,
+        handler: lazy(() => import('@src/response/mihoyo/roleExplore'))
+      },
+      {
+        regular: mihoyoRouteRules.weapon,
+        handler: lazy(() => import('@src/response/mihoyo/weapon'))
+      },
+      {
+        regular: mihoyoRouteRules.buddy,
+        handler: lazy(() => import('@src/response/mihoyo/buddy'))
+      },
+      {
+        regular: mihoyoRouteRules.roleCombat,
+        handler: lazy(() => import('@src/response/mihoyo/roleCombat'))
+      },
+      {
+        regular: mihoyoRouteRules.ledger,
+        handler: lazy(() => import('@src/response/mihoyo/ledger'))
+      },
+      {
+        regular: mihoyoRouteRules.exchange,
+        handler: lazy(() => import('@src/response/mihoyo/exchange'))
+      },
+      {
+        regular: mihoyoRouteRules.mysNews,
+        handler: lazy(() => import('@src/response/mihoyo/mysNews'))
+      },
+      {
+        regular: mihoyoRouteRules.ckHelp,
+        handler: lazy(() => import('@src/response/mihoyo/ckHelp'))
+      },
+      {
+        regular: mihoyoRouteRules.ckCheck,
+        handler: lazy(() => import('@src/response/mihoyo/ckCheck'))
       }
     ]
   }

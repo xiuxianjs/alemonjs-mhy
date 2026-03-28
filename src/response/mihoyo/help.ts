@@ -1,13 +1,8 @@
-import { mihoyoMigrationPhases } from '@src/constants/mihoyo';
+import MihoyoHelp, { MHY_TOTAL_PAGES } from '@src/img/views/MihoyoHelp';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
+import { renderComponentIsHtmlToBuffer } from 'jsxp';
 
-const migrationTips = [
-  '迁移目标：把 Miao-Yunzai 的米游社服务迁移到 alemonjs 的路由 + 应用层 + 模型层 + 数据层。',
-  '当前已完成：Phase-1 骨架 + Phase-2 账号与Cookie绑定。',
-  '下一步建议：迁移 dailyNote / index / character 等基础查询。'
-];
-
-export default (e: EventsEnum) => {
+export default async (e: EventsEnum) => {
   const event = createEvent({
     event: e,
     selects: ['message.create', 'private.message.create']
@@ -15,30 +10,35 @@ export default (e: EventsEnum) => {
 
   const [message] = useMessage(event);
 
+  const pageMatch = e.MessageText.match(/(\d+)/);
+  let page = pageMatch ? parseInt(pageMatch[1]) : 1;
+
+  if (page < 1) {
+    page = 1;
+  }
+
+  if (page > MHY_TOTAL_PAGES) {
+    page = MHY_TOTAL_PAGES;
+  }
+
+  const img = await renderComponentIsHtmlToBuffer(MihoyoHelp, {
+    data: { page, totalPages: MHY_TOTAL_PAGES }
+  });
+
+  if (typeof img === 'boolean') {
+    const format = Format.create();
+
+    const md = Format.createMarkdown();
+
+    md.addText('米游社帮助图片加载失败，请稍后重试');
+    format.addMarkdown(md);
+    void message.send({ format });
+
+    return;
+  }
+
   const format = Format.create();
-  const md = Format.createMarkdown();
 
-  md.addText('米游社迁移模块（alemonjs）');
-  md.addNewline();
-  md.addText('');
-  md.addNewline();
-
-  migrationTips.forEach(item => {
-    md.addText(`- ${item}`);
-    md.addNewline();
-  });
-
-  md.addText('');
-  md.addNewline();
-  md.addText('阶段清单：');
-  md.addNewline();
-
-  mihoyoMigrationPhases.forEach(item => {
-    md.addText(`- ${item}`);
-    md.addNewline();
-  });
-
-  format.addMarkdown(md);
-
+  format.addImage(img);
   void message.send({ format });
 };
