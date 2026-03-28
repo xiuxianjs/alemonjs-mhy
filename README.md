@@ -10,7 +10,7 @@
 
 ## 指令一览
 
-<img src="./image.png">
+[README_COMMAND](./README_COMMAND.md)
 
 ## 安装方式1: Git
 
@@ -53,7 +53,16 @@ apps:
 
 ## 安装方式2: npm
 
-> 暂未支持
+```sh
+yarn add alemonjs-mhy -W
+```
+
+- alemon.config.yaml
+
+```yaml
+apps:
+  alemonjs-mhy: true # 启动扩展
+```
 
 ## 开发指南
 
