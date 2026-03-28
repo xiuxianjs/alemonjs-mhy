@@ -15,13 +15,13 @@
 - 地址
 
 ```sh
-https://github.com/lemonade-lab/alemonjs-mhy.git
+https://github.com/xiuxianjs/alemonjs-mhy.git
 ```
 
 若访问受限，可使用如下加速地址
 
 ```sh
-https://ghfast.top/https://github.com/lemonade-lab/alemonjs-mhy.git
+https://ghfast.top/https://github.com/xiuxianjs/alemonjs-mhy.git
 ```
 
 - branch
@@ -33,7 +33,7 @@ release
 ### 本地
 
 ```sh
-git clone -b release --depth=1 https://github.com/lemonade-lab/alemonjs-mhy.git ./packages/alemonjs-mhy
+git clone -b release --depth=1 https://github.com/xiuxianjs/alemonjs-mhy.git ./packages/alemonjs-mhy
 ```
 
 ```sh
