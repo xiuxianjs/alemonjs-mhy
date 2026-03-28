@@ -1,0 +1,67 @@
+{
+  "name": "alemonjs-mhy",
+  "version": "0.0.1",
+  "description": "yunzai",
+  "author": "ningmengchongshui",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package": "./package.json"
+  },
+  "scripts": {
+    "app": "node index.js",
+    "dev": "npx lvy app.ts",
+    "view": "npx lvy app.ts --jsxp",
+    "build": "lvy build",
+    "lint": "eslint src --ext .ts,.tsx,.js --max-warnings=0",
+    "lint:fix": "eslint src --ext .ts,.tsx,.js --fix --max-warnings=0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky",
+    "precommit": "lint-staged"
+  },
+  "dependencies": {
+    "classnames": "^2.5.1",
+    "dayjs": "^1.11.13",
+    "dotenv": "^17.3.1",
+    "glob": "^13.0.6",
+    "jsxp": "^1.2.2",
+    "lodash-es": "^4.17.21",
+    "md5": "^2.3.0",
+    "minio": "^8.0.6",
+    "pg": "^8.20.0",
+    "sharp": "^0.34.3",
+    "svg-captcha": "^1.4.0"
+  },
+  "devDependencies": {
+    "@alemonjs/bubble": "^2.1.4",
+    "@alemonjs/db": "^0.0.13",
+    "@alemonjs/discord": "^2.1.7",
+    "@alemonjs/onebot": "^2.1.4",
+    "@alemonjs/qq-bot": "^2.1.6",
+    "@eslint/js": "^9.18.0",
+    "alemonjs": "^2.1.42",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.3",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
+    "lvyjs": "0.3.0-alpha.2",
+    "prettier": "^3",
+    "sass": "^1.90.0",
+    "tailwindcss": "3",
+    "typescript-eslint": "^8.19.1"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix --max-warnings=0 --no-warn-ignored"
+    ],
+    "*.{json,md,yml,yaml,css,scss,html}": [
+      "prettier --write"
+    ]
+  },
+  "packageManager": "yarn@1.22.22"
+}
