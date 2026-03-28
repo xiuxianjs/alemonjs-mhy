@@ -1,7 +1,7 @@
 import { EventsEnum } from 'alemonjs';
 
 export default (e: EventsEnum) => {
-  console.log('进中间件', e);
+  console.log('mhy', e.name);
 
   // 放行
   return true;
