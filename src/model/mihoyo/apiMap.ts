@@ -1,25 +1,66 @@
 import { resolveMihoyoRegion } from './region';
-import type { MihoyoApiEndpoint, MihoyoApiRequest, MihoyoApiUrlResult, MihoyoGame } from './types';
+import type { MihoyoApiEndpoint, MihoyoApiRequest, MihoyoApiUrlResult, MihoyoGame, MihoyoRegionType } from './types';
 
-const endpointMap: Record<MihoyoGame, Record<string, MihoyoApiEndpoint>> = {
+// ─── CN 端点 ────────────────────────────────────────
+
+const cnEndpoints: Record<MihoyoGame, Record<string, MihoyoApiEndpoint>> = {
   gs: {
+    getFp: { host: 'https://public-data-api.mihoyo.com', path: '/device-fp/api/getFp', method: 'POST' },
     dailyNote: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/dailyNote', method: 'GET' },
     index: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/index', method: 'GET' },
     spiralAbyss: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/spiralAbyss', method: 'GET' },
-    character: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/character/list', method: 'POST' }
+    roleCombat: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/role_combat', method: 'GET' },
+    character: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/character/list', method: 'POST' },
+    characterDetail: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/genshin/api/character/detail', method: 'GET' }
   },
   sr: {
+    getFp: { host: 'https://public-data-api.mihoyo.com', path: '/device-fp/api/getFp', method: 'POST' },
     dailyNote: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/hkrpg/api/note', method: 'GET' },
     index: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/hkrpg/api/index', method: 'GET' },
+    basicInfo: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/hkrpg/api/role/basicInfo', method: 'GET' },
     spiralAbyss: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/hkrpg/api/challenge', method: 'GET' },
-    character: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/hkrpg/api/avatar/basic', method: 'GET' }
+    character: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/hkrpg/api/avatar/basic', method: 'GET' },
+    avatarInfo: { host: 'https://api-takumi-record.mihoyo.com', path: '/game_record/app/hkrpg/api/avatar/info', method: 'GET' }
   },
   zzz: {
+    getFp: { host: 'https://public-data-api.mihoyo.com', path: '/device-fp/api/getFp', method: 'POST' },
     dailyNote: { host: 'https://api-takumi-record.mihoyo.com', path: '/event/game_record_zzz/api/zzz/note', method: 'GET' },
     index: { host: 'https://api-takumi-record.mihoyo.com', path: '/event/game_record_zzz/api/zzz/index', method: 'GET' },
     character: { host: 'https://api-takumi-record.mihoyo.com', path: '/event/game_record_zzz/api/zzz/avatar/basic', method: 'GET' },
     buddy: { host: 'https://api-takumi-record.mihoyo.com', path: '/event/game_record_zzz/api/zzz/buddy/info', method: 'GET' }
   }
+};
+
+// ─── OS 端点 ────────────────────────────────────────
+
+const osEndpoints: Record<MihoyoGame, Record<string, MihoyoApiEndpoint>> = {
+  gs: {
+    getFp: { host: 'https://sg-public-data-api.hoyoverse.com', path: '/device-fp/api/getFp', method: 'POST' },
+    dailyNote: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/dailyNote', method: 'GET' },
+    index: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/index', method: 'GET' },
+    spiralAbyss: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/spiralAbyss', method: 'GET' },
+    character: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/genshin/api/character/list', method: 'POST' }
+  },
+  sr: {
+    getFp: { host: 'https://sg-public-data-api.hoyoverse.com', path: '/device-fp/api/getFp', method: 'POST' },
+    dailyNote: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/hkrpg/api/note', method: 'GET' },
+    index: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/hkrpg/api/index', method: 'GET' },
+    spiralAbyss: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/hkrpg/api/challenge', method: 'GET' },
+    character: { host: 'https://bbs-api-os.hoyolab.com', path: '/game_record/app/hkrpg/api/avatar/basic', method: 'GET' }
+  },
+  zzz: {
+    getFp: { host: 'https://sg-public-data-api.hoyoverse.com', path: '/device-fp/api/getFp', method: 'POST' },
+    dailyNote: { host: 'https://sg-act-nap-api.hoyolab.com', path: '/event/game_record_zzz/api/zzz/note', method: 'GET' },
+    index: { host: 'https://sg-act-nap-api.hoyolab.com', path: '/event/game_record_zzz/api/zzz/index', method: 'GET' },
+    character: { host: 'https://sg-act-nap-api.hoyolab.com', path: '/event/game_record_zzz/api/zzz/avatar/basic', method: 'GET' },
+    buddy: { host: 'https://sg-act-nap-api.hoyolab.com', path: '/event/game_record_zzz/api/zzz/buddy/info', method: 'GET' }
+  }
+};
+
+const getEndpoint = (game: MihoyoGame, api: string, regionType: MihoyoRegionType): MihoyoApiEndpoint | null => {
+  const map = regionType === 'cn' ? cnEndpoints : osEndpoints;
+
+  return map[game]?.[api] ?? null;
 };
 
 const buildQueryString = (query?: Record<string, string | number | boolean>): string => {
@@ -37,14 +78,13 @@ const buildQueryString = (query?: Record<string, string | number | boolean>): st
 };
 
 export const buildMihoyoApiUrl = (request: MihoyoApiRequest): MihoyoApiUrlResult | null => {
-  const gameMap = endpointMap[request.game];
-  const endpoint = gameMap?.[request.api];
+  const region = resolveMihoyoRegion(request.uid, request.game);
+  const endpoint = getEndpoint(request.game, request.api, region.type);
 
   if (!endpoint) {
     return null;
   }
 
-  const region = resolveMihoyoRegion(request.uid, request.game);
   const queryString = buildQueryString({
     role_id: request.uid,
     server: region.server,

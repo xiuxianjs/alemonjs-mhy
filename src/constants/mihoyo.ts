@@ -18,7 +18,10 @@ export const mihoyoRouteRules = {
   showUid: /^(!|！|\/|#|＃)(原神|星铁|绝区零)?(我的)?(uid)\d{0,2}$/i,
   myCk: /^(!|！|\/|#|＃)(原神|星铁|绝区零)?(我的|删除)c(oo)?k(ie)?$/i,
   delUid: /^(!|！|\/|#|＃)(原神|星铁|绝区零)?(删除|解绑)uid(\s|\+)*(\d{1,2})?$/i,
-  cookieAccept: /(ltoken|ltoken_v2).*(ltuid|login_uid|ltmid_v2)/
+  cookieAccept: /(ltoken|ltoken_v2).*(ltuid|login_uid|ltmid_v2)/,
+  dailyNote: /^(!|！|\/|#|＃)*(原神|星铁|绝区零)?(体力|树脂|查询体力|开拓力|电量)$/,
+  playerIndex: /^(!|！|\/|#|＃)(原神|星铁|绝区零)?(角色|面板|探索)$/,
+  spiralAbyss: /^(!|！|\/|#|＃)(原神|星铁)?(上期|往期|本期)*(深渊|深境|深境螺旋|忘却之庭|虚构叙事)(上期|往期|本期)*$/
 } as const;
 
 export const mihoyoMigrationPhases = [

@@ -17,7 +17,7 @@ export default (e: EventsEnum) => {
   md.addNewline();
   md.addText('- phase-2: 已完成（Cookie/UID绑定、账号管理）');
   md.addNewline();
-  md.addText('- phase-3: 待开发（基础查询接口）');
+  md.addText('- phase-3: 已完成（体力/角色面板/深渊查询）');
   md.addNewline();
   md.addText('- phase-4: 待开发（抽卡/充值链路）');
   md.addNewline();

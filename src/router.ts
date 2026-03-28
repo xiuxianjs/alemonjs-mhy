@@ -41,6 +41,18 @@ export default defineRouter([
       {
         regular: mihoyoRouteRules.delUid,
         handler: lazy(() => import('@src/response/mihoyo/delUid'))
+      },
+      {
+        regular: mihoyoRouteRules.dailyNote,
+        handler: lazy(() => import('@src/response/mihoyo/dailyNote'))
+      },
+      {
+        regular: mihoyoRouteRules.playerIndex,
+        handler: lazy(() => import('@src/response/mihoyo/playerIndex'))
+      },
+      {
+        regular: mihoyoRouteRules.spiralAbyss,
+        handler: lazy(() => import('@src/response/mihoyo/spiralAbyss'))
       }
     ]
   }
