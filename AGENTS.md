@@ -2,7 +2,7 @@
 
 ## 概述
 
-基于 [alemonjs](https://github.com/lemonade-lab/alemonjs) 框架的米游社 API 插件，支持原神 (GS)、星穹铁道 (SR)、绝区零 (ZZZ) 三款游戏的数据查询、签到、Cookie 管理等功能。通过 JSX 渲染引擎 (jsxp) 将查询结果生成图片卡片回复。
+基于 [alemonjs](https://github.com/lemonade-lab/alemonjs) 框架。通过 JSX 渲染引擎 (jsxp) 将查询结果生成图片卡片回复。
 
 ## 技术栈
 
@@ -64,37 +64,7 @@ export default async (e: EventsEnum) => {
 };
 ```
 
-## 目录结构
-
-| 目录                          | 用途                                                  |
-| ----------------------------- | ----------------------------------------------------- |
-| `src/router.ts`               | 路由注册 (25+ 条)                                     |
-| `src/constants/mihoyo.ts`     | 命令正则、游戏常量                                    |
-| `src/response/mihoyo/`        | 响应处理器 (每个命令一个文件)                         |
-| `src/response/mw.ts`          | 游戏类型检测中间件                                    |
-| `src/model/mihoyo/`           | 核心业务逻辑                                          |
-| `src/model/mihoyo/mysApi.ts`  | HTTP 客户端：DS 签名、device_fp、请求头、缓存         |
-| `src/model/mihoyo/apiMap.ts`  | API 端点映射 (CN/OS × GS/SR/ZZZ)                      |
-| `src/model/mihoyo/region.ts`  | UID → 区服解析                                        |
-| `src/model/mihoyo/query.ts`   | 统一查询封装 (Cookie + UID + API 调用 + retcode 处理) |
-| `src/model/mihoyo/account.ts` | Cookie / UID 绑定与存储                               |
-| `src/model/mihoyo/stoken.ts`  | Stoken 管理 + 扫码登录                                |
-| `src/model/mihoyo/sign.ts`    | 游戏/米游社签到                                       |
-| `src/model/keys.ts`           | Redis Key 模板 (前缀 `data:alemonjs-mhy:`)            |
-| `src/img/views/`              | JSX 卡片组件 (12 个)                                  |
-| `src/img/views/HTML.tsx`      | 通用 HTML 包装器 (字体、样式)                         |
-| `src/assets/`                 | 字体、SCSS、图片资源                                  |
-
-## 米游社 API 关键参数
-
-| 参数        | CN 值                                                          | OS 值                              |
-| ----------- | -------------------------------------------------------------- | ---------------------------------- |
-| Salt        | `xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs`                             | `okr4obncj8bw5a65hbnn5oo6ixjc3l9w` |
-| App Version | `2.40.1`                                                       | `2.55.0`                           |
-| Client Type | `5`                                                            | `2`                                |
-| DS 签名     | `md5(salt=...&t=...&r=...&b=...&q=...)` → `{t},{r},{hash}`     |
-| device_fp   | POST `public-data-api.mihoyo.com/device-fp/api/getFp`，缓存 1h |
-| 查询缓存    | 300 秒 (5 分钟)                                                |
+                                                |
 
 ## Redis Key 约定
 
