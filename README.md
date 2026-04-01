@@ -34,23 +34,6 @@ https://ghfast.top/https://github.com/xiuxianjs/alemonjs-mhy.git
 release
 ```
 
-### 本地
-
-```sh
-git clone -b release --depth=1 https://github.com/xiuxianjs/alemonjs-mhy.git ./packages/alemonjs-mhy
-```
-
-```sh
-yarn install #开始模块化
-```
-
-- alemon.config.yaml
-
-```yaml
-apps:
-  alemonjs-mhy: true # 启动扩展
-```
-
 ## 安装方式2: npm
 
 ```sh
