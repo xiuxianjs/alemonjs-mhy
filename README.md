@@ -1,8 +1,6 @@
 # 阿柠檬-米哈游
 
-必要环境 `nodejs` 、`sql(mysql/sqlite)`、`redis` 、`chrome`
-
-该扩展推荐使用`alemongo`或`alemondesk`作为生产环境
+`alemonx` https://github.com/lemonade-lab/alemonx/releases
 
 `alemongo` https://github.com/lemonade-lab/alemongo
 
@@ -14,7 +12,7 @@
 
 ## 安装方式1: Git
 
-### alemongo/alemondesk
+### alemongo/alemondesk/alemonx
 
 - 地址
 
